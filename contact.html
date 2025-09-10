@@ -1,32 +1,45 @@
-<!doctype html><html lang="en"><head>
+<!doctype html>
+<html lang="en">
+<head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>MD • Contact</title>
+<title>MKD • Contact</title>
 <style>
-:root{--bg:#000;--fg:#eee}
-html,body{height:100%}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
-.bar{display:flex;align-items:center;justify-content:center;padding:18px 16px}
-.nav{display:flex;gap:28px;letter-spacing:.06em}
-.nav a{color:#cfcfcf;text-decoration:none;font-weight:600}.nav a:hover{color:#fff}
-.contact{min-height:70svh;display:grid;place-items:center;text-align:center;gap:16px;padding:24px}
-.email{font-size:clamp(18px,2.2vw,28px);text-decoration:none;border:1px solid #444;padding:12px 20px;border-radius:999px;color:#fff}
-.email:hover{background:#111}
-.copy{border:1px solid #444;background:#0a0a0a;color:#eee;padding:10px 16px;border-radius:10px}
-.copy:hover{background:#141414}
-</style></head><body>
-<header class="bar"><nav class="nav"><a href="index.html">WORK</a><a href="contact.html">CONTACT</a></nav></header>
-<main class="contact">
-  <h1>CONTACT</h1>
-  <p>Bookings, styling & collaborations.</p>
-  <a class="email" href="mailto:majadudkoviak@gmail.com">majadudkoviak@gmail.com</a>
-  <button class="copy" aria-label="Copy email">Copy</button>
-</main>
+  :root{--bg:#000;--fg:#eee;--muted:#aaa}
+  html,body{height:100%}
+  body{margin:0;background:#000;color:var(--fg);font-family:ui-sans-serif,system-ui,Inter,Arial,sans-serif;display:flex;flex-direction:column}
+  .bar{display:flex;align-items:center;justify-content:center;gap:28px;padding:18px 12px;position:sticky;top:0;background:#000cc;backdrop-filter:saturate(1.2) blur(2px)}
+  .bar a{text-decoration:none;color:#fff;letter-spacing:.1em;font-weight:700}
+  main{display:grid;place-items:center;flex:1;padding:8vh 16px}
+  .card{max-width:760px;width:min(92vw,760px);border:1px solid #111;border-radius:16px;padding:28px;background:#050505}
+  h1{margin:0 0 12px 0;font-size:clamp(24px,3vw,34px);letter-spacing:.06em}
+  .email{font-size:clamp(18px,2.2vw,22px);display:flex;gap:12px;align-items:center;color:#fff;text-decoration:none}
+  .btn{cursor:pointer;border:1px solid #222;background:#0a0a0a;color:#fff;border-radius:999px;padding:10px 14px}
+  .btn:hover{background:#101010}
+  .muted{color:var(--muted);margin-top:12px}
+</style>
 <script>
-const btn=document.querySelector('.copy');
-btn?.addEventListener('click', async ()=>{
-  try{ await navigator.clipboard.writeText('majadudkoviak@gmail.com');
-       const t=btn.textContent; btn.textContent='Copied'; setTimeout(()=>btn.textContent=t,1500); }catch(e){}
-});
+async function copyEmail() {
+  const e='majadudkoviak@gmail.com';
+  try{ await navigator.clipboard.writeText(e); alert('Email copied'); }
+  catch{ window.prompt('Copy email:', e); }
+}
 </script>
-</body></html>
+</head>
+<body>
+<nav class="bar">
+  <a href="index.html">WORK</a>
+  <a href="contact.html">CONTACT</a>
+</nav>
+<main>
+  <div class="card">
+    <h1>Let’s work.</h1>
+    <div class="email">
+      <a href="mailto:majadudkoviak@gmail.com">majadudkoviak@gmail.com</a>
+      <button class="btn" onclick="copyEmail()">Copy</button>
+    </div>
+    <p class="muted">Response in 24 h. Attach moodboard / references if you have them.</p>
+  </div>
+</main>
+</body>
+</html>
