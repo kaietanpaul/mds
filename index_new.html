@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>MD • Work</title>
+<style>
+  :root { --gap:24px; --bg:#000; --fg:#eee; }
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
+  /* header */
+  .bar{display:flex;align-items:center;justify-content:center;padding:18px 16px}
+  .nav{display:flex;gap:28px;letter-spacing:.06em}
+  .nav a{color:#cfcfcf;text-decoration:none;font-weight:600}
+  .nav a:hover{color:#fff}
+
+  /* hero video */
+  .hero{position:relative}
+  .hero-video{display:block;width:100%;aspect-ratio:19/6;object-fit:cover;object-position:50% 50%;background:#000}
+  @media (max-height:520px){ .hero-video{object-fit:contain} }
+
+  /* layout container: bez gutterów */
+  .container{max-width:none;margin:0;padding:0}
+
+  /* GRID */
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--gap);padding:var(--gap);padding-left:0;padding-right:0}
+  /* na desktopie kafle dotykają lewej/prawej krawędzi okna – brak bocznych ramek */
+  @media (min-width:1025px){ .grid{padding-left:0;padding-right:0} }
+  @media (max-width:768px){ .grid{grid-template-columns:1fr;padding:0} }
+
+  .grid-item{position:relative;overflow:hidden;background:#000}
+  .grid-item img{display:block;width:100%;height:auto;vertical-align:bottom}
+  /* hover bez tekstu, tylko lekkie przyciemnienie */
+  .overlay{position:absolute;inset:0;background:rgba(0,0,0,.45);opacity:0;transition:opacity .18s}
+  .grid-item:hover .overlay{opacity:1}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <nav class="nav">
+    <a href="index.html">WORK</a>
+    <a href="contact.html">CONTACT</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <video class="hero-video" autoplay muted playsinline loop preload="metadata" poster="assets/video/hero_poster.webp">
+    <source media="(max-width:768px)" src="assets/video/hero_small.webm" type="video/webm">
+    <source media="(max-width:768px)" src="assets/video/hero_small.mp4"  type="video/mp4">
+    <source src="assets/video/hero.webm" type="video/webm">
+    <source src="assets/video/hero.mp4"  type="video/mp4">
+  </video>
+</section>
+
+<main class="container">
+  <section class="grid">
+
+    <!-- 1) NOWY – zielone rajstopy + heels -->
+    <a href="project1.html" class="grid-item">
+      <img src="assets/projects/new1.jpg" width="1200" height="1800" alt="">
+      <div class="overlay"></div>
+    </a>
+
+    <!-- 2) KALTBLUT – magazyn -->
+    <a href="publication1.html" class="grid-item">
+      <img src="assets/projects/kaltblut.jpg" width="1400" height="2000" alt="KALTBLUT magazine feature">
+      <div class="overlay"></div>
+    </a>
+
+    <!-- 3–11) wg kolejności jak wysłałaś (new2…new10) -->
+    <a href="project3.html" class="grid-item"><img src="assets/projects/new2.jpg"  alt=""><div class="overlay"></div></a>
+    <a href="project4.html" class="grid-item"><img src="assets/projects/new3.jpg"  alt=""><div class="overlay"></div></a>
+    <a href="project5.html" class="grid-item"><img src="assets/projects/new4.jpg"  alt=""><div class="overlay"></div></a>
+    <a href="project6.html" class="grid-item"><img src="assets/projects/new5.jpg"  alt=""><div class="overlay"></div></a>
+    <a href="project7.html" class="grid-item"><img src="assets/projects/new6.jpg"  alt=""><div class="overlay"></div></a>
+    <a href="project8.html" class="grid-item"><img src="assets/projects/new7.jpg"  alt=""><div class="overlay"></div></a>
+    <a href="project9.html" class="grid-item"><img src="assets/projects/new8.jpg"  alt=""><div class="overlay"></div></a>
+    <a href="project10.html" class="grid-item"><img src="assets/projects/new9.jpg" alt=""><div class="overlay"></div></a>
+    <a href="project11.html" class="grid-item"><img src="assets/projects/new10.jpg" alt=""><div class="overlay"></div></a>
+
+  </section>
+</main>
+
+<script>
+  // Lazy uruchomienie video dopiero gdy jest w widoku
+  const v=document.querySelector('.hero-video');
+  if(v){
+    const io=new IntersectionObserver(([e])=>{
+      if(e.isIntersecting){ v.load(); io.disconnect(); }
+    },{threshold:.2});
+    io.observe(v);
+  }
+
+  // slide hero to contact
+  const contactLink=[...document.querySelectorAll('a')].find(a=>/contact\.html$/.test(a.getAttribute('href')||''));
+  if(contactLink){
+    contactLink.addEventListener('click',(ev)=>{
+      ev.preventDefault();
+      const hero=document.querySelector('.hero');
+      if(hero){
+        hero.style.overflow='hidden';
+        hero.style.transition='max-height .45s ease';
+        hero.style.maxHeight=hero.offsetHeight+'px';
+        requestAnimationFrame(()=>hero.style.maxHeight='0px');
+        setTimeout(()=>location.href=contactLink.href,380);
+      } else {
+        location.href=contactLink.href;
+      }
+    });
+  }
+</script>
+</body>
+</html>
